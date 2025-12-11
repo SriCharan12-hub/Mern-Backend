@@ -424,7 +424,7 @@ export const getOrderByIdAdmin = async (req, res) => {
         console.error('Error fetching order details:', error);
         res.status(500).json({
             success: false,
-            message: 'Failed to fetch order details',
+            message: 'Failped to fetch order details',
             error: error.message
         });
     }

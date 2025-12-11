@@ -15,7 +15,7 @@ const data = new mongoose.Schema({
     },
     password:{
         type:String,
-        required: [true, "Password is required"]
+        required: [true, "Password is required"],
     },
     addresses: [{
         fullName: { type: String, required: true },

@@ -6,7 +6,6 @@ import Product from "../Model/Productmodel.js";
 export const getWishlist = async (req, res) => {
     try {
         const wishlist = await Wishlist.findOne({ userId: req.user.id }).populate('items.productId');
-        
         // Correctly format the response to match the frontend's needs
         res.json({ wishlist: wishlist ? wishlist.items.map(item => ({
             productId: item.productId._id, // Keep the product ID for removal

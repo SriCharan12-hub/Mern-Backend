@@ -66,7 +66,27 @@ export const updateAddress = async (req, res) => {
         const addressId = req.params.id;
         const updateData = req.body;
 
-        
+        // Validate BEFORE updating the database
+        if (updateData.postalCode) {
+            const postalCode = Number(updateData.postalCode);
+            if (postalCode < 100000 || postalCode > 999999) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: "Postal Code must be a valid 6-digit number." 
+                });
+            }
+        }
+
+        if (updateData.PhoneNumber) {
+            if (!/^\d{10}$/.test(updateData.PhoneNumber)) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: "Phone Number must be a valid 10-digit number." 
+                });
+            }
+        }
+
+        // Now update the database after validation passes
         const updatedAddress = await addressmodel.findOneAndUpdate(
             { _id: addressId, userId: userId },
             { $set: updateData },
@@ -74,8 +94,10 @@ export const updateAddress = async (req, res) => {
         );
 
         if (!updatedAddress) {
-            
-            return res.status(404).json({ success: false, message: "Address not found or unauthorized." });
+            return res.status(404).json({ 
+                success: false, 
+                message: "Address not found or unauthorized." 
+            });
         }
 
         res.status(200).json({ 
@@ -86,7 +108,10 @@ export const updateAddress = async (req, res) => {
 
     } catch (error) {
         console.error("Error updating address:", error);
-        res.status(500).json({ success: false, message: "Internal server error." });
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal server error." 
+        });
     }
 };
 

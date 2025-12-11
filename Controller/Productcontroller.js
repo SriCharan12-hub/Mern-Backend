@@ -29,6 +29,12 @@ export const addProduct = async (req, res) => {
                 message: 'Please upload at least one image' 
             });
             }
+        if (price <= 0) {
+            return res.status(400).json({ message: "Price should be greater than 0" });
+        }
+        if (count <= 0) {
+            return res.status(400).json({ message: "Count should be greater than 0" });
+        }
 
         // Find the product with the highest 'id' to get the next available ID
         const lastProduct = await Product.findOne().sort({ id: -1 });

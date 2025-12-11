@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(cors({
-    origin: 'https://mern-frontend-6a7t.vercel.app' || "http://localhost:5173",
+    origin: "http://localhost:5173",
     credentials: true
 }));
 
