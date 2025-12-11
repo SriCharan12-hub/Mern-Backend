@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(cors({
-    origin:"https://mern-frontend-ahen.vercel.app/",
+    origin:"https://mern-frontend-6a7t.vercel.app",
     credentials: true
 }));
 
