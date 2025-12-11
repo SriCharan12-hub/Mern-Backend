@@ -11,20 +11,13 @@ dotenv.config()
 const app=express()
 
 app.use(express.json())
-app.use(cors({
-    methods: ["GET", "POST", "PUT", "DELETE"]
-}))
+
 // Set COOP/COEP headers to allow Google OAuth popups/postMessage
-app.use((req, res, next) => {
-    // allow popups to communicate back to opener (needed by some OAuth flows)
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
-    // keep embedder policy permissive (default) so we don't block resources
-    res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
-    next();
-});
+
 app.use(cors({
     origin:"https://mern-frontend-ahen.vercel.app/",
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
 app.use(route)
