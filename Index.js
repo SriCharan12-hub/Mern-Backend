@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5173" || "https://mern-frontend-c4wo.vercel.app",
     credentials: true
 }));
 
