@@ -3,12 +3,13 @@ import { addProduct, getProducts, updateProduct, deleteProduct } from "../Contro
 import { getCart, removeFromCart, addToCart, updateQuantity } from "../Controller/Cartcontroller.js";
 import { placeOrder, clearCart, getUserOrders, getOrderById, cancelOrder } from "../Controller/Ordercontoller.js";
 import { addItemToWishlist, getWishlist, removeItemFromWishlist } from "../Controller/Wishlistcontroller.js"
-import { forgotPassword, verifyOtp } from "../Controller/ResetPincontroller.js";
+import { forgotPassword, verifyOtp,forgotPasswordLimiter } from "../Controller/ResetPincontroller.js";
 import { Router } from "express";
 import authMiddleware from "../Connection/middleware.js";
 import { addAddress, deleteAddress, getAddressesByUserId, updateAddress } from "../Controller/AddressController.js";
 import { getAllUserOrders, getFilteredOrders, getOrderStatistics, updateOrderStatus, getOrderByIdAdmin } from "../Controller/Ordercontoller.js";
 import { submitFeedback, getAllFeedback, getFeedbackStats, getFeedbackById, updateFeedbackStatus, deleteFeedback } from "../Controller/FeedBackcontroller.js";
+import { createOrder, verifyPayment } from "../Controller/PaymentController.js";
 
 const route = Router()
 
@@ -25,7 +26,7 @@ route.put('/user/resetpassword', resetpassword)
 // ============================================
 // RESET PASSWORD ROUTES
 // ============================================
-route.post("/forgot-password", forgotPassword);
+route.post("/forgot-password", forgotPasswordLimiter, forgotPassword);
 route.post("/verify-otp", verifyOtp);
 
 // ============================================
@@ -99,4 +100,14 @@ route.get('/:orderId', authMiddleware, getOrderById);
 // Cancel an order
 route.put('/:orderId/cancel', authMiddleware, cancelOrder);
 
+// Cancel an order
+route.put('/:orderId/cancel', authMiddleware, cancelOrder);
+
+// ============================================
+// PAYMENT ROUTES
+// ============================================
+route.post('/payment/create-order', authMiddleware, createOrder);
+route.post('/payment/verify-payment', authMiddleware, verifyPayment);
+
 export default route;
+

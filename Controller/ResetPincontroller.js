@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import resetpin from '../Model/ResetPinmodel.js';
 import bcrypt from "bcrypt"
 import usermodel from '../Model/Usermodel.js';
+import rateLimit from "express-rate-limit";
 dotenv.config();
 
 // export async function sendEmail(req,res) {
@@ -106,3 +107,11 @@ export async function verifyOtp(req, res) {
     res.status(500).json({ error: "Failed to verify OTP" });
   }
 }
+
+
+
+export const forgotPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 3, // only 3 attempts per 15 minutes
+  message: "Too many attempts, try again later",
+});

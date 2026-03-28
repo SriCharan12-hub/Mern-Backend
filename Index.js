@@ -11,7 +11,7 @@ app.use(express.json());
 
 // CORS (safe)
 app.use(cors({
-    origin: "https://mern-frontend-m18p.vercel.app",
+    origin: "http://localhost:5173", //https://mern-frontend-m18p.vercel.app
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
@@ -35,3 +35,4 @@ async function Connecting() {
 }
 
 Connecting();
+``
