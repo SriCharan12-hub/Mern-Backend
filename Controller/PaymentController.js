@@ -31,10 +31,18 @@ export const createOrder = async (req, res) => {
   }
 
   try {
+    console.log("Received amount from frontend:", amount, "Type:", typeof amount);
+    
+    // Ensure amount is a valid number
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount)) {
+      throw new Error(`Invalid amount received: ${amount}`);
+    }
+
     const options = {
       // Razorpay expects amount in paise (integer). 
       // Math.round ensures we don't send decimals which causes a 400 error.
-      amount: Math.round(Number(amount) * 100), 
+      amount: Math.round(numericAmount * 100), 
       currency: "INR",
       receipt: "receipt_" + Date.now(),
     };
